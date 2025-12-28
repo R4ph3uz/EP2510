@@ -1,0 +1,82 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+ \geometry{
+ a4paper,
+ total={170mm,257mm},
+ left=20mm,
+ top=20mm,
+ }
+ \usepackage{graphicx}
+ \usepackage{titling}
+
+ \title{[Module 2] Secure ranging and positioning}
+\author{Raphaël Euzèby}
+\date{Novembre 2025}
+ 
+ \usepackage{fancyhdr}
+\fancypagestyle{plain}{%  the preset of fancyhdr 
+    \fancyhf{} % clear all header and footer fields
+    \fancyfoot[R]{\thepage}
+    \fancyfoot[L]{\thedate}
+    \fancyhead[L]{Assignment 1}
+    \fancyhead[R]{\theauthor}
+}
+\makeatletter
+\def\@maketitle{%
+  \newpage
+  \null
+  \vskip 1em%
+  \begin{center}%
+  \let \footnote \thanks
+    {\LARGE \@title \par}%
+    \vskip 1em%
+    %{\large \@date}%
+  \end{center}%
+  \par
+  \vskip 1em}
+\makeatother
+
+\usepackage{lipsum}  
+\usepackage{cmbright}
+
+\begin{document}
+
+\maketitle
+
+
+\section*{
+Q1: How does a GNSS receiver calculate time within the PVT? Why are timing-grade receivers generally simpler to spoof compared to location-oriented ones?
+}
+
+A GNSS receiver is able to detect its position and the time using 4 satellites, each satellite send their exact location and the time the message was send. With 1 satellite it is possible to know that the receiver is on a sphere of radius R, with a second it is possible to know that the receiver is on a circle, with 3 it is possible to know where the receiver is (there are 2 points, one on earth, the other is far in space) and the last satellite is used to correct the clock of the phone : 4 unknown variables, 4 satellites. 
+It is easier to spoof a time-grade receiver because there is less redundancy, the receiver only calculate things based on the clock and so if the attacker control the clock he can send messages with earlier clock time to make the impression the receiver is far from the antenna and so in a wrong location.
+
+\section*{
+Q2: What is the main limitation a spoofer has regarding total transmitted power and how can this be resolved in the case of a mobile victim?
+}
+A spoofer must be careful because the easiest way would be to "overwrite" the real signal with one more powerful, and so the hardware would only care about the more powerful and prettier one, but it is easily detectable because there is a new higher signal.
+Furthermore, the spoofer must take into consideration the Doppler effect and so cannot spoof a big group which do not go in only one direction.
+
+\section*{
+Q3: Authentication is one of the most promising ways to protect GNSS receivers. Specifically, consider Galileo: what is the core security primitive behind OSNMA and how is this implemented in the system? Briefly explain how it is used in the Galileo system.
+}
+
+The concept behind OSNMA is that each satellite hashes and signs its navigation messages using a private cryptographic key (ECDSA). All receivers have access to the corresponding public key, allowing them to verify the authenticity and integrity of the transmitted data. This ensures that the messages truly originate from the legitimate satellite and have not been altered in transit.
+
+\section*{
+Q4: How is the cryptographical material distributed in OSNMA and how is cross-authentication implemented?
+}
+
+When a satellite transmits its navigation message on the E1-B signal, the receiver first obtains the information needed to verify future authentication data. This includes the public key and the OSNMA configuration parameters. Once this initial information is received and validated, the satellite broadcasts the TESLA key chain: the receiver receives delayed-disclosure TESLA keys, which are used to authenticate previously received data. Alongside these keys, the receiver also receives the MAC corresponding to earlier navigation message fields. By combining the MAC with the TESLA keys revealed later, the receiver can finally verify the authenticity and integrity of the navigation messages that were already stored in memory. 
+Cross-authentication means that satellites authenticate each-other, and so a satellite send their own MAC for their own messages but also Mac for other satellites in order to be sure that if one sattelite can't send these the reciever obtain in any case the MAC.
+
+
+\section*{
+Q5: Why satellites that rely on neighboring satellites to provide authentication material for them are still sensitive to replay attacks?
+}
+
+In OSNMA, the key use to generate MAC (Message authentication code) is sent after the messages with little delay, so while the key hasn't been disclosed receivers are still sensible to replays attack. Indeed, the message is cryptographically valid, and while the key has not been disclosed, all messages are signed with this key, so the attacker can send the same message that will be received and processed twice.
+The fact that other satellites provide authentication materials doesn't help because they will send MAC that are in adequacy with received messages especially for the replay attack because it is a real message sent multiple times. So the MAC will verify both the original message and the replay attack, that's why relying on neighbor satellites doesn't help for replay attacks.
+
+\end{document}
