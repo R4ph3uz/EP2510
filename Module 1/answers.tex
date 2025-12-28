@@ -1,0 +1,89 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+ \geometry{
+ a4paper,
+ total={170mm,257mm},
+ left=20mm,
+ top=20mm,
+ }
+ \usepackage{graphicx}
+ \usepackage{titling}
+
+ \title{[Module 1] Secure vehicular communication systems}
+\author{Raphaël Euzèby}
+\date{Novembre 2025}
+ 
+ \usepackage{fancyhdr}
+\fancypagestyle{plain}{%  the preset of fancyhdr 
+    \fancyhf{} % clear all header and footer fields
+    \fancyfoot[R]{\thepage}
+    \fancyfoot[L]{\thedate}
+    \fancyhead[L]{Assignment 1}
+    \fancyhead[R]{\theauthor}
+}
+\makeatletter
+\def\@maketitle{%
+  \newpage
+  \null
+  \vskip 1em%
+  \begin{center}%
+  \let \footnote \thanks
+    {\LARGE \@title \par}%
+    \vskip 1em%
+    %{\large \@date}%
+  \end{center}%
+  \par
+  \vskip 1em}
+\makeatother
+
+\usepackage{lipsum}  
+\usepackage{cmbright}
+
+\begin{document}
+
+\maketitle
+
+
+\section*{
+Q1: Is it possible to track vehicles even with the use of pseudonyms? Give 2 examples and elaborate.
+}
+
+The track of vehicles with pseudonyms depends on what the attacker can do. If the attacker is only able to see a particular message and decode it but doesn't know the past messages, he won't be able to determinate if a vehicle changed of pseudonyms or if it is another vehicle.
+But if the attacker is able to see other messages, store them and compute something, he might find out that a vehicle just changed of pseudonyms. Indeed, a vehicle shouldn't change from 100km/h to 10km/h in a second, so if a message is sent each 2 seconds, even with the change of pseudonyms it is possible to track a specific vehicle.
+
+
+\section*{
+Q2: How does different pseudonym acquisition and changing policies affect the security of the vehicles, e.g., in terms of detecting misbehavior? Consider, for example, the policies given in the Simulation Framework for Misbehavior Detection in Vehicular Networks paper (Section G).
+}
+
+In this paper, four pseudonym-changing policies are discussed.   \\ 
+The periodical change of pseudonyms poses a threat to vehicle privacy, as the timing of each change can become predictable, especially if the change interval is standardized. Furthermore, since a vehicle’s speed or position cannot vary drastically in a short time (as mentioned in Q1), this predictability makes it easier to link pseudonyms to the same vehicle.
+
+The distance-based policy does not fully solve this issue either, because distance and time are often correlated. For example, on long routes such as Stockholm to Kiruna, vehicles tend to maintain consistent speeds over extended periods on the same road, making changes still somewhat predictable.
+
+The disposable policy also introduces risks. Since the number of messages sent before a pseudonym change is predefined in the standards, an observer could estimate when a vehicle will switch pseudonyms, making it possible to re-identify it after the change.
+
+Finally, the random policy does not create a specific direct threat, but it is less efficient in practice. Because pseudonym changes occur unpredictably, it becomes more difficult to manage revocation and maintain system performance.
+
+\section*{
+Q3: Consider a VC system using Policy 3 (P3) from SECMACE that restricts vehicles in obtaining only one pseudonym (e.g., valid for 5 min) per pseudonym request. What are the pros and cons of this configuration?
+}
+
+Policy 3 (P3) ensures synchronized, time-aligned pseudonym issuance, enhancing privacy by preventing timing-based linkability. Limiting vehicles to one short-lived pseudonym per request reduces misuse and Sybil attacks. However, it increases communication overhead, frequent VPKI interactions, and revocation issues.
+
+
+
+\section*{
+Q4: Considering an insider manipulating safety beacons, how can the system thwart such an adversary? Are there any limitations for the defensive mechanisms? How does the VPKI enhance the defense of the system?
+}
+
+An insider manipulating safety beacons can be thwarted through digital signatures, message authentication, and misbehavior detection mechanisms. However, limitations include delayed detection, false positives, and reliance on trusted hardware. The Vehicular Public Key Infrastructure (VPKI) enhances defense by enabling secure identity management, pseudonym issuance, and efficient revocation of misbehaving entities.
+
+\section*{
+Q5: How does the choice of cryptographic key length \& other characteristics of the cryptosystem affect the practicality (e.g., safety) of the system? Can an adversary use these to her advantage and how?
+}
+
+Longer cryptographic keys improve security but increase computation and communication overhead, potentially delaying safety messages. Shorter keys enhance efficiency but weaken protection against attacks. An adversary could exploit weaker keys (via bruteforce attack for example)  to inject false messages, cause delays, or exhaust system resources, thereby compromising overall vehicular safety and reliability.
+
+\end{document}
