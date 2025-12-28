@@ -1,0 +1,80 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+ \geometry{
+ a4paper,
+ total={170mm,257mm},
+ left=20mm,
+ top=20mm,
+ }
+ \usepackage{graphicx}
+ \usepackage{titling}
+
+ \title{[Module 3] Secure sensing}
+\author{Raphaël Euzèby}
+\date{Novembre 2025}
+ 
+ \usepackage{fancyhdr}
+\fancypagestyle{plain}{%  the preset of fancyhdr 
+    \fancyhf{} % clear all header and footer fields
+    \fancyfoot[R]{\thepage}
+    \fancyfoot[L]{\thedate}
+    \fancyhead[L]{Assignment 3}
+    \fancyhead[R]{\theauthor}
+}
+\makeatletter
+\def\@maketitle{%
+  \newpage
+  \null
+  \vskip 1em%
+  \begin{center}%
+  \let \footnote \thanks
+    {\LARGE \@title \par}%
+    \vskip 1em%
+    %{\large \@date}%
+  \end{center}%
+  \par
+  \vskip 1em}
+\makeatother
+
+\usepackage{lipsum}  
+\usepackage{cmbright}
+
+\begin{document}
+
+\maketitle
+
+
+\section*{
+Q1: (paper 1) Why are Bluetooth Low Energy (BLE) devices often lacking in security and privacy guarantees? Explain at least 2 reasons and how they translate into vulnerabilities/attacks.
+}
+
+Bluetooth Low Energy (BLE) devices often suffer from security and privacy vulnerabilities, primarily due to hardware constraints and limitations in software implementation. On one hand, these devices, designed to be lightweight and energy-efficient, have limited processing power and memory, and so developers want to prevent them from incorporating robust cryptographic mechanisms. Encryption or authentication algorithms, when present, are sometimes simplified or optional to conserve resources, leaving communications vulnerable to eavesdropping or spoofing attacks (such as Man-in-the-Middle attacks). On the other hand, developers of these devices, often facing tight deadlines and a lack of security expertise, struggle to properly implement protection protocols. For example, the use of static or predictable MAC addresses facilitates user tracking or the exploitation of targeted vulnerabilities. These weaknesses which implies vulnerabilities, such as the interception of sensitive data (like medical information) or the remote control of connected devices, jeopardizing the confidentiality and integrity of BLE systems.
+
+\section*{
+Q2: (paper 1) Why are manufacturers implementing their own crypto in BLE instead of using standard crypto? Discuss at least 1 solution that might fix this systemic issue.
+}
+
+Manufacturers often implement proprietary cryptographic primitives, likely under the assumption that designing secure solutions in-house is straightforward. However, this approach is risky: cryptographic standards exist for a reason, they are rigorously tested and widely trusted. Another possible motivation is the need to adapt cryptographic operations to the constraints of resource-limited devices, such as those used in Bluetooth Low Energy (BLE) applications. Unfortunately, these modifications can introduce vulnerabilities.
+A better approach would be to develop an open-source cryptographic module specifically tailored for BLE. Such a module would allow public scrutiny, enabling security researchers to identify and address potential weaknesses. Developers could then adopt it with confidence, knowing it has been thoroughly tested by the community.
+
+\section*{
+Q3: (paper 2) Can you stop Sybils before they register/enter the system? What are early detection (before they contribute) countermeasures to Sybil attackers?
+}
+
+By adding a token in each device, this would disable the appearance of accounts in multiple places and with multiple sessions simultaneously. Enforcing a single active token policy would eliminate Sybil users submitting data simultaneously. Furthermore this could be a good idea to create "refresh tokens", these should not have an unlimited lifetime, thus making them harder to maintain. Instead of extracting them once, attackers would need to capture them continuously. Moreover, the server should not issue multiple, overlapping tokens.
+
+
+\section*{
+Q4: (paper 2) Can we improve the identification of malicious actors (malicious data) by using reputation systems? What are the pros and cons of such a system?
+}
+
+A reputation system helps to remove bad data in the whole system because it stores everyone that send malicious data, and so other people when they receive data from this person doesn't take it into account. However it requires to store this list either in a central system dedicated to that, or in a decentralized way, and share it with Peer-to-peer, furthermore it must be processed by someone. Finally it doesn't help for Sybil, because Sybil are able to create few identities, and even if each are detected they will create new ones.
+
+\section*{
+Q5: (paper 2 and 3) Please discuss the pros and cons of openness. Does openness affect the security and privacy of a system, and how/why?
+}
+In theory, openness does not inherently weaken a system’s security. In an ideal scenario, anyone discovering a vulnerability would responsibly disclose it to the developer, who would then promptly patch the issue. However, reality is far from perfect: vulnerabilities, once found, may be exploited before they are reported. Security becomes a race between attackers seeking to exploit this and ethical researchers or users working to expose and fix them.
+ 
+
+\end{document}
