@@ -300,7 +300,7 @@ function Map() {
           <MapContainer center={position} zoom={13} zoomControl={false} className="h-full w-full">
             <TileLayer
               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-              url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
+              url="https://a.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
             />
             <FetchOnMove setData={setViewBox}/>
             <ZoomControl position="bottomright"/>
