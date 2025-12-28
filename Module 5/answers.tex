@@ -1,0 +1,80 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+ \geometry{
+ a4paper,
+ total={170mm,257mm},
+ left=20mm,
+ top=20mm,
+ }
+ \usepackage{graphicx}
+ \usepackage{titling}
+
+ \title{[Module 5] Secure routing}
+\author{Raphaël Euzèby}
+\date{December 2025}
+ 
+ \usepackage{fancyhdr}
+\fancypagestyle{plain}{%  the preset of fancyhdr 
+    \fancyhf{} % clear all header and footer fields
+    \fancyfoot[R]{\thepage}
+    \fancyfoot[L]{\thedate}
+    \fancyhead[L]{Assignment 5}
+    \fancyhead[R]{\theauthor}
+}
+\makeatletter
+\def\@maketitle{%
+  \newpage
+  \null
+  \vskip 1em%
+  \begin{center}%
+  \let \footnote \thanks
+    {\LARGE \@title \par}%
+    \vskip 1em%
+    %{\large \@date}%
+  \end{center}%
+  \par
+  \vskip 1em}
+\makeatother
+
+\usepackage{lipsum}  
+\usepackage{cmbright}
+
+\begin{document}
+
+\maketitle
+
+
+\section*{
+Q1: According to Paper 1. Please try to discuss the castor's recovery from different attacks. (e.g., Why can CASTOR recover faster than others in dropping attack? Why can CASTOR fully recovered from wormhole attack, while others cannot?)
+}
+
+CASTOR can recover quickly from packet dropping attacks because it relies on local monitoring and fast, decentralized decision-making. Each node independently observes its neighbors’ forwarding behavior and can immediately reroute traffic when it detects abnormal packet loss. This avoids slow, network-wide coordination, which makes CASTOR faster than many traditional secure routing protocols. In the case of wormhole attacks, CASTOR can fully recover because it does not blindly trust advertised path length or latency. Instead, it checks the consistency of neighborhood information and isolates nodes that create unrealistic shortcuts. Other protocols often accept falsified topology information, which makes them unable to properly detect or recover from wormholes.
+
+
+
+\section*{
+Q2: What is the benefit of the “isolated routing strategy” proposed in Paper 1? Are there any hidden security issues with this strategy?
+}
+
+The isolated routing strategy improves security by separating suspicious or compromised nodes from the main routing process, thereby limiting the spread and impact of attacks. It allows the network to continue functioning by using trusted subpaths, which increases resilience and scalability. However false positives can cause honest nodes to be wrongly isolated, leading to reduced network connectivity. Additionally, coordinated attackers could exploit the isolation mechanism by falsely accusing legitimate nodes, which could intentionally fragment the network and cause denial-of-service conditions.
+
+\section*{
+Q3: In Paper 2, assuming you are an adversary and trying to attack the DRPKI system. Which attacking method you most likely to use? Why? Does this method have the same performance in RPKI?
+}
+
+As an adversary, the most effective attack against DRPKI would be a denial-of-service attack targeting the authorities that participate in the threshold signing process. Since DRPKI requires cooperation among multiple entities to generate valid signatures, disrupting the availability of some participants can prevent certificate issuance. This attack seems a good idea because it does not require breaking cryptography. In traditional RPKI, this attack would be less effective because a single trusted authority can generate signatures independently.
+
+\section*{
+Q4: Apart from the “threshold signature” proposed in Paper 2, can you come up with other solutions to serve the same purpose?
+}
+
+One possibility would be a multi-signature system, where multiple independent authorities produce separate signatures that must all be verified before a certificate is accepted, increasing trust distribution. Another option is the use of blockchain to publish routing authorizations in a transparent and tamper-resistant way. Finally trusted execution environments and hardware security modules can also be used to protect private keys and ensure that signing operations cannot be easily compromised.
+
+\section*{
+Q5: Based on Paper 2, what is the cost of the “threshold signature” mechanism among RIRs? What is the risk of using this mechanism?
+} 
+
+The threshold signature mechanism requires higher computational resources, more complex key management, and frequent secure communication between RIRs to jointly produce signatures. This results increased latency and system complexity compared to traditional single-signer models. The main risk of this mechanism is reduced availability, as the system may be unable to function if a sufficient number of RIRs are offline or unreachable. There is also a risk of collusion, where a group of RIRs could cooperate maliciously to subvert the system if they reach the threshold required for signing.
+
+\end{document}
