@@ -1,0 +1,152 @@
+\documentclass[9pt,conference]{IEEEtran}
+\usepackage{amssymb,amsthm,amsmath,array}
+\usepackage{graphicx}
+\usepackage[caption=false,font=footnotesize]{subfig}
+\usepackage{xspace}
+\usepackage[sort&compress, numbers]{natbib}
+\usepackage{stmaryrd}
+\usepackage{xcolor}
+\usepackage{mathtools}
+\usepackage{float}
+\usepackage{textcomp}
+\usepackage{comment}
+
+\begin{document}
+\title{Location Privacy Challenges and Solutions : Approximate location a compromise between privacy and usefulness }
+\author{\IEEEauthorblockN{
+        Raphaël Euzèby
+    }
+    \IEEEauthorblockA{
+        \textit{Advanced Network Systems Security (ANSS) Group}\\
+        \textit{KTH Royal Institute}\\
+        December 2025, Stockholm Sweden.
+    }
+}
+\maketitle
+\begin{abstract}
+This research paper examines the anonymity and privacy risks associated with location-based services (LBS). It explores how the approximate location works in nowadays devices (smartphone), and how approximate location can be a compromise between privacy and usefulness of the service. By synthesizing existing strategies and identifying gaps, this study aims to establish a foundation for future research and provide actionable insights into achieving robust privacy protection in LBS ecosystems.
+\end{abstract}
+
+\section{Introduction}
+
+The ubiquity of Location-Based Services (LBS), such as Google Maps, has revolutionized how individuals navigate, interact, and access information in real time. While these services offer unparalleled convenience and efficiency, they also introduce significant risks to user anonymity and privacy. The continuous collection, processing, and sharing of location data expose users to potential threats, including unauthorized surveillance, profiling, and malicious exploitation of personal information\cite{insidegnss2023privacy}. These concerns not only decrease user trust but also pose ethical and regulatory challenges for service providers.  
+
+This research-based paper will first examine the anonymity and privacy threats inherent in LBS, analyzing the technical and social implications of location data exposure. Additionally, this paper evaluates existing solutions-ranging from user-end strategies like anonymization techniques and privacy settings to intermediary services that aim to mitigate risks without compromising functionality. The goal is to foster a more secure and trustworthy ecosystem for users while not compromising the efficiency of the service.
+
+The structure of this paper is as follows. We discuss the related work in Section II. In section III we examines threat associated with location data, in section IV we explore user-end solutions especially Approximate location. Finally in section V we will investigate how the approximate location can be useful in specific case (highly-densated area, countryside, highway) and how it may affect the service.
+
+
+\subsection*{Problem Definition}
+This study aims to create a foundation for future research and help clarify how the different objectives can be accomplished.
+\subsubsection*{Type of attacks possible}
+From stalking to house burglary through traffic manipulation \cite{insidegnss2023privacy}, the exploitation of location data in LBS exposes users to a spectrum of threats that extend beyond digital privacy into real-world harm. The interconnected nature of modern LBS means that vulnerabilities in one application, such as weak encryption in a navigation app or lax privacy controls on a social platform, can cascade into systemic risks, affecting everything from personal security to public infrastructure. In this part we will try to understand which type of data can be stolen and then processed in order to execute a malicious attack.
+\subsubsection*{State of the art}
+Current research in this area can help us understand how attackers operate and the methods they use. Studies from other related fields may also provide useful background information. Additionally, non-academic research (like industry reports or practical case studies) can offer real-world insights that support academic findings. Theses valuable findings will be collected and processed.
+\subsubsection*{Focus on solution}
+Few solutions exists on the user side like $\epsilon$-geo-indistinguishability \cite{Heitmann02012025}, location granularity control \cite{CSS2013TransfoLocation} or cloaking \cite{cloaking}. Here we will focus on approximate location that may help to hide initial location of a user, hence improve privacy. Approximate location is a feature developed since 2022 (Android 12), that hide the exact location of a user via noises, inaccurate position, random positionning in a range etc. 
+
+\begin{comment}
+
+\subsection*{Expected Results}
+This study is expected to give a comprehensive overview of key ideas behind the urge to anonymize data from location based services, an analysis of already existing solutions via technical figures or explanation and finally this paper aim to help any start for a thesis.
+
+This study aims to provide a clear understanding of why anonymizing location-based data matters in today’s digital world. As apps and services increasingly rely on location data, the need to protect user privacy has never been more urgent. This paper will break down the existing solutions, explaining how they work and evaluating their effectiveness using real-world examples and technical insights.
+Our goal is to make this research useful for anyone interested in the topic, whether you’re a student starting a thesis, a developer building privacy tools, or simply someone curious about data protection. By summarizing what we know and pointing out where more work is needed, we hope to encourage new ideas and help shape a future where location-based technologies respect user privacy.
+
+\subsection*{Novelty}
+This study seeks to establish a foundation for future research and to provide clarity on how the various objectives in this field can be effectively achieved. Rather than introducing a groundbreaking new encryption method within a limited timeframe of three months, the novelty of this paper lies in its comprehensive synthesis of the current state of research on privacy in GNSS. By consolidating existing knowledge and insights, this work aims to make these complex concepts more accessible and understandable. Ultimately, it is intended to serve as a valuable resource and potential starting point for further academic exploration, such as a thesis.
+
+\end{comment}
+
+\section{Related work}
+Some research paper are out on internet and focus on location privacy is studied since at least 2010. Through careful research about the number of citation of those articles, some seems to be major paper that changed the vision of GNSS. Regarding user technique (like $\epsilon$-geo-indistinguishibility) few papers have written about that, however more papers talk about user-side technique like MAC-Rotation or peer-to-peer anonymizers for location.
+
+A significant body of research on this topic has been available online since the 2020's, as it is new few papers are out on internet and a lot are about the mathematics behind that \cite{lix}. By carefully analyzing the citation counts of these studies, it becomes evident that some papers have had a major impact on the privacy in GNSS. While user-focused techniques, such as MAC rotation—have received relatively big attention in the literature, there is a much narrow discussion around the location privacy of new devices, including this new protocol (approximate location) designed to safeguard user data.
+This website (https://www.sciencedirect.com/topics/computer-science/location-privacy) holds particular value as it offers a lot of papers with abstract talking about location privacy.
+Additionally, few papers create a link between privacy and usefulness of the service. Heitmann \cite{Heitmann02012025} conduct a study on approximate-location versus precise location when using LBS on phones (both android and iPhone), he first used around 30 applications found both on AppStore and PlayStore with fine-location than with approximate location and looked what changed. From darkpattern to allow precise location to bugs in the application, he found out what was the difference and how it affected the user experience. However, he never done a comparison with privacy.
+This paper \cite{Haversine} is the first to define utility with a set of metrics, even if this paper focus on LBS using continuous location (RioBuses, Maps-alike) it helps understanding how it is possible to create measures with few different Location Privacy Preventing Mechanisms (LPPMs) like cloaking, dummy location etc... 
+
+
+
+\section{Possible Attacks}
+When analyzing potential attacks involving unauthorized access to location data, it is essential to consider the granularity of the information. Certain attacks are only feasible when the data meets specific precision requirements. Additionally, the nature of the attack often depends on how the data was accessed. This section will explore both the methods by which location data can be obtained and the types of attacks that may result from such access.
+
+\begin{comment}
+\subsubsection{Town-level granularity}
+The least precise type of attack involves town- or country-level granularity, where the attacker can only determine the receiver’s location within hundreds of kilometers. Even at this low resolution, an attacker-using, for example, a malicious weather app-could infer that a family is away on holiday and exploit this information to commit crimes such as burglary or car theft.
+\end{comment}
+
+\subsubsection{District-level granularity}
+When an attacker can pinpoint a victim’s location within tens of kilometers, they gain district-level accuracy. This information may be obtained through location-based chat application such as dating apps or targeted advertising—like promotions for museums, restaurants, or other local attractions. With such data, an attacker could track the victim’s movements, engage in stalking, or even sell the location data to third parties. Moreover, this level of detail enables the attacker to analyze the victim’s habits, social connections, and relationships, potentially facilitating scams or other malicious activities.
+
+\subsubsection{Block-level granularity}
+Imagine an attacker able to steal the location identity of another user so he could freely ride the automatic toll highways, as the bill would be sent to another user. Also, an attacker able to access the location information from many mobile devices simultaneously could easily create a 'heat map' of the most crowded regions in a city at any point of a day and could enable various attacks upon crowded areas. Knowing someone’s location with building-level granularity could also lead to public disclosure of unwanted information, such as how often an employee who is supposed to work is taking coffee breaks, how often a husband is visiting other places than those he informed the wife about, or the religious and political affiliations of a person (based on the gatherings and places he/she is attending), etc. In extreme cases, an eavesdropper which finds out private personal information based on location patterns could also resort to blackmailing and produce economical losses and/or social reputation losses.
+
+\subsubsection{Room-level granularity}
+Many services utilize location data with precision down to a few meters, ranging from home automation systems to apps that offers vouchers when walking by a place or navigating from point A to point B using tools like Google Maps. With access to such detailed information, an attacker could impersonate the victim and potentially carry out any action the victim is authorized to perform.
+
+\begin{comment}
+\subsubsection{Professional-level granularity}
+With the growing adoption of V2X systems, an attacker capable of manipulating data with centimeter-level precision could sabotage these systems entirely. For instance, they might send fraudulent commands to force a lane change and provoke an accident. Alternatively, they could target a specific vehicle (such as a military convoy) by subtly altering its route without the occupants noticing. Furthermore, an attacker could manipulate urban traffic systems to facilitate criminal activities, such as evading law enforcement after committing a crime.
+\end{comment}
+
+It is clear why location data must remain private and why adjusting granularity for each specific use case is crucial. Even with access to lower-granularity data, malicious actors can still carry out crimes typically associated with higher precision. Therefore,  approximate location can be  a safeguard for user privacy because even if it is not possible to prevent city-attacks it is now possible to prevent attacks that requires a precision of less than 100m.
+
+\section{User-side solutions}
+
+\subsection{Dummy location}
+Dummy location is a privacy-preserving technique that shields users of location-based services by replacing or distorting their real GPS coordinates with false ones in real-time. Rather than exposing a user’s exact position, this method generates plausible but inaccurate location data—such as reporting their presence within a broader area or near a landmark—thereby preventing third parties, advertisers, or malicious actors from tracking precise movements or routines. While this approach may slightly reduce the accuracy of services like navigation or local recommendations, it significantly enhances anonymity and complicates the creation of detailed movement profiles. An advanced variation involves generating multiple fake API calls with slightly altered origin and destination points, making it nearly impossible to determine a user’s true location or intended route, though this does increase processing costs for service providers. 
+
+\subsection{Cloaking}
+
+Cloaking is a privacy-enhancing technique that shields users’ real-time location by replacing their exact coordinates with generalized or randomized data, ensuring their movements remain confidential. Rather than revealing precise whereabouts, cloaking dynamically obscures a user’s position—either by shifting it to a nearby area or blending it with a group of other users. A common approach within cloaking is k-neighbor anonymity, which guarantees that a user’s location is indistinguishable from at least k-1 others in the same region, making it statistically impossible to single them out. This method disrupts persistent tracking and prevents the creation of detailed movement profiles, while still allowing location-based services to function, albeit with slightly reduced precision. By combining coordinate distortion with anonymity sets cloaking may introduce minor inaccuracies in location-dependent services, such as navigation or localized alerts, the trade-off ensures robust anonymity and security.
+
+\subsection{Approximate Location}
+
+Approximate location is a privacy feature that obscures a user’s exact GPS coordinates by rounding their position to a broader area. Both iOS and Android achieve this by dividing the map into grid cells or zones—typically a few kilometers wide—and sharing the coordinates of the center or a fixed point within that cell, ensuring apps receive a consistent but imprecise location. The size of the area can dynamically adjust based on context, such as being smaller in cities and larger in rural regions, to balance privacy and functionality. iOS, since iOS 14 (2020), and Android, since Android 12 (2021), use this method to prevent apps from tracking exact movements or pinpointing sensitive locations. Another idea is to select a random point in a circle where the center is the real position and with a radius that change based on the context of the application (as in the figure \ref{fig:Approx_loc}.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\linewidth]{Approx_loc.png}
+    \caption{Real (blue) position going to Green using approximate location (red)}
+    \label{fig:Approx_loc}
+\end{figure}
+
+
+\section{"ApproxLoc" visualize privacy vs usefulness }
+
+\subsection{Formulas of privacy and usefulness}
+The first thing we must do is to find out formulas of how to know if approximate location is a good privacy measure and if it disturbs or not the service.
+This paper \cite{Haversine} examines some idea about how to define if the new location is really private and if the service can still run and be useful.
+\subsubsection{Usefulness of a service}
+
+In this paper, usefulness is defined through a set of metrics \cite{Haversine}. However, our goal is to derive a simple formula that quantifies how far a new path deviates from the optimal one. To this end, we propose the following approach:
+
+$\text{Utility } \% = \frac{\text{Total distance of shared path}}{\text{Total distance of optimal path}} \times 100 - \frac{\text{Additional distance}}{\text{Total distance of new path}} \times 100$
+
+Or it is possible to have this formula in time :
+
+$\text{Utility}_{time} \% = \frac{\text{Shared path time}}{\text{Optimal path time}} \times 100 - \frac{\text{Additional time}}{\text{Total travel time}} \times 100$
+
+
+This formula measures the proportion of the new path that aligns with the theoretically optimal path. The underlying idea is to assess how much the new path deviates from perfection and whether this deviation significantly impacts the user’s experience.
+However, the absolute distance to the destination must also be considered. For example, if the destination is nearby, a slightly longer path (e.g., adding 1 minute) may be negligible. In other hand, if the destination is far, even a small deviation from the optimal path could result in hours of additional travel time. Thus, the utility should account for both the shared path proportion and the relative impact of the deviation on the total travel time.
+
+Obviously this formula is a first idea, and it would be interesting to modify it and visualize the modifications.
+
+\subsection{Privacy of a different location}
+
+To assess anonymity when a user shares a new location, we first need a method to quantify how identifiable they are. Using Bayes theorem, we assume that the probability of being at any given point within a defined area follows a uniform distribution \cite{lix}. Consequently, the closer a reported location is to the user’s true location, the lower their anonymity.
+To formalize this, we propose the following privacy metric:
+
+$\text{Privacy }\% = 1-\exp(-r \times d(A,C))$
+
+
+In this formula, the radius is the one used in the approximate location method, while d(A,C) represents the Haversine distance \cite{Haversine} between the true location A and the reported location C and r the radius used in the approximate location.
+The server, aware of the radius r, can infer that a larger radius enhances privacy, as it broadens the possible area where the user's true location might lie. Similarly, a greater distance d(A,C) between the true and reported locations further increases privacy, as it reduces the likelihood of accurately identifying the user's position.
+An interesting scenario arises when the radius  is large, but the reported location C is close to the true location A. Even in this case, the server recognizes that the wide radius ensures high privacy, as the user's true location could still be anywhere within the large area defined by the radius.
+
+
+\bibliographystyle{IEEEtran}
+\bibliography{references}
+\end{document}

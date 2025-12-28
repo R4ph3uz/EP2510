@@ -1,0 +1,77 @@
+ Obfuscation in LBS : How approximate location is a compromise between privacy and utili
+ 
+ https://www.sciencedirect.com/topics/computer-science/location-privacy
+ 27 ?
+ Ardagna et al. [54]
+ 
+ 
+
+
+ User aware of their position
+ % usefulness of service :% of shared path
+ % privacy: 1- exp(-radius*d(A,C)) //// 1- exp(-radius*abs(x'-x)*abs(y'-y))
+ or distance c'esqt pas bon, il faut haversine
+ 
+ 
+ 
+ On this paper (Approx vs fine location TANDFONLINE)
+ work with 36 iphone + 36 android, start by explaining Approx location = COARSE location
+Select 36 apps were on both playstore & Appstore to work on (Doctolib, uber, Bolt, ...)
+Try to understand the differance of use between fine location and coarse location
+highight dark pattern and other techniques (infinite ask) to have fine location
+UI/UX problem ; missing results ; bugs -> create by coarse loc
+Calculus are "subjective" but they talk about it with "soft goals and hard goals"
+
+All in Germany ; difference between ios & android ;
+
+=> doesn't do a correlation between privacy and coarse location
+
+
+-----------------------------------
+https://www.sciencedirect.com/topics/computer-science/location-privacy
+
+Compiles few articles about privacy
+
+
+
+
+-------------------------------
+https://dl.acm.org/doi/pdf/10.1145/3474717.3484219
+
+
+ Fan and Gote (2021)
+ The distortion metrics class included the Hamming
+distance (which measures whether the obfuscated location differs from the
+input location) and the Haversine distance (which measures how far the obfus­
+cated location is from the input location).
+
+
+Create a notion of usefullness and help put a number on privacy
+usefullness is made up of 
+Tot Dist (in %)
+Max Dist (in %)
+Std Dev Displacement (in %)
+Max Dist Home (in %)
+Rad Gyration (in %)
+# Diff Places (in %)
+# Significant Places (in %)
+Avg Mobility Error (in %)
+
+all on trajectory (with user moving) -> take real time data from Rio
+
+
+
+-------------------------------------
+https://arxiv.org/pdf/1709.06318
+
+Oya, Troncoso, and Pérez-González (2017) evaluated the utility loss caused by
+geo-indistinguishability mechanisms, an approach based on differential privacy,
+through two metrics: the average Euclidian distance between the user’s actual
+and obfuscated location and the radius of the circular region centred around the
+user’s actual location where the obfuscated location is with probability 0.95. In
+their research, the authors highlight that some desired levels of location privacy
+protection cannot be achieved without a significant decrease of service utility.
+ 
+ 
+to use "obfuscation" require harversine distance
+
